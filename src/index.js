@@ -15,6 +15,7 @@ const client = new Client({
   port: port
 });
 
+//setting a connection with the database.
 async function connect(){
  await client.connect((err)=>{
    if(!err){console.log("connected to database succesfully")}
@@ -22,6 +23,7 @@ async function connect(){
  })
 }
 
+//add a new Visitor to the database
 async function addNewVisitor(id,name, age, date, time, assistent, comments){
    let sql = `INSERT INTO Visitors Values(${id},'${name}',${age},'${date}','${time}','${assistent}','${comments}')`;
   await client.query(sql,(err)=>{
@@ -30,6 +32,7 @@ async function addNewVisitor(id,name, age, date, time, assistent, comments){
   })
 }
 
+// list all visitors by id and name
 async function listAllVisitors(){
   sql = 'SELECT id,name FROM Visitors;'
   await client.query(sql, (err,result)=>{
@@ -37,6 +40,9 @@ async function listAllVisitors(){
     else{console.log(result.rows)}
   })
 }
+
+
+// delete a visitor with a specified id
 async function deleteVisitor(id){
   let sql = `DELETE FROM Visitors WHERE id = (${id});`
   await client.query(sql,(err,results)=>{
@@ -45,8 +51,8 @@ async function deleteVisitor(id){
   })
 }
 
+//update a visitor
 async function update(column,newValue,id){
-  
   sql = `UPDATE Visitors SET ${column} = '${newValue}' WHERE id = ${id}`
   await client.query(sql,(err,res)=>{
     if(err){console.log(err)}
@@ -54,6 +60,7 @@ async function update(column,newValue,id){
   })
 }
 
+//view one visitor of a specified id
 async function viewOneVisitor(id){
   let sql = `SELEct * FROM Visitors WHERE id = ${id}`
   await client.query(sql,(err,results)=>{
@@ -62,6 +69,7 @@ async function viewOneVisitor(id){
   })
 }
 
+//delete all visitors from the database
 const deleteAllVisitors = async function(){
   sql = "DELETE FROM Visitors";
   await client.query(sql, (err)=>{
@@ -69,14 +77,9 @@ const deleteAllVisitors = async function(){
     else{console.log("all visitors' infomation has been deleted!")}
   })
 }
-connect()
 
-//addNewVisitor(5,'maki',44,'05-10-2020','23:14','mxov1','yes commander')
-//listAllVisitors()
-//deleteVisitor(1)
-//update("name",'nkanyamba',5)
-//viewOneVisitor(5)
-//deleteAllVisitors()
+
+
 
 
 
